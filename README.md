@@ -85,7 +85,7 @@ All content is provided for educational and defensive research purposes only.
 
 ---
 
-## 🧱 Network Layout (Mermaid Diagram)
+## 🧱 Network Layout 
 
 ```mermaid
 flowchart LR
