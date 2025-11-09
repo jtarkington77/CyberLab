@@ -149,6 +149,26 @@ After each detonation:
 
 ---
 
+## 11. Host VM- Escape Indicators
+Use host monitoring to allert on:
+- New or unexpected qemu-system-* child processes.
+- tap/bridge membership changes for DET_LAN interfaces
+- QEMU process opening outbound sockets on non-lab interfaces.
+- Spikdes in virtio device resets or unexplained DVM module messages
+- Any host process spawning with the detonation VM's user context.
+Example spot checks (host).
+```bash
+# Unexpected sockets from qemu on non-lab NICs
+ss -tupn | grep qemu
+
+# Verify tap/bridge members
+ip link show
+brctl show || bridge link
+
+# List qemu/libvirt processes
+ps aux | egrep 'qemu|libvirt|virtqemud' | grep -v egrep
+```
+
 ## 11. Legal & Ethical Considerations
 - Working with malware discovered "in the wild" is research activity, not exploitation.
 - Do not distribute or publish live binaries, hashes, or code that can be weaponized.
