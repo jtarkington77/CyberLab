@@ -68,4 +68,46 @@ All content is provided for educational and defensive research purposes only.
 
 ---
 
+## 📘 Documentation Index
+
+### Guides
+- [Runbook](./docs/runbook.md)
+- [Safe Handling](./docs/safehandling.md)
+- [Firewall Rules (OPNsense)](./docs/firewall_rules_opnsense.md)
+
+### Scripts
+- [Start PCAP Capture](./scripts/start_pcap.sh)
+- [Collect Artifacts](./scripts/collect_artifacts.sh)
+
+### Templates
+- [Sample Analysis Template](./templates/sample_analysis_template.md)
+- [Live Notes Template](./templates/notes_template.md)
+
+---
+
+## 🧱 Network Layout (Mermaid Diagram)
+
+```mermaid
+flowchart LR
+    subgraph Host[Hypervisor Host]
+        HostNIC1[(NIC1 - Home LAN)]
+        HostNIC2[(NIC2 - DET_LAN Bridge)]
+    end
+
+    subgraph Detonation_LAN["Detonation VLAN (10.10.50.0/24)"]
+        WinDet[Windows Detonation VM]
+        Kali[Kali Monitor / Wireshark]
+    end
+
+    subgraph Monitoring_LAN["Monitoring VLAN (10.10.60.0/24)"]
+        Wazuh[Wazuh Manager]
+        Sensor[Packet Sensor / Storage]
+    end
+
+    HostNIC2 --> Detonation_LAN
+    WinDet --> Kali
+    Detonation_LAN -->|Mirrored| Monitoring_LAN
+    Wazuh --> Sensor
+```
+
 © 2025 Jeremy Tarkington — All Rights Reserved.
