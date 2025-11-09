@@ -85,29 +85,42 @@ All content is provided for educational and defensive research purposes only.
 
 ---
 
-## 🧱 Network Layout 
+## Network Layout 
 
 ```mermaid
-flowchart LR
-    subgraph Host[Hypervisor Host]
-        HostNIC1[(NIC1 - Home LAN)]
-        HostNIC2[(NIC2 - DET_LAN Bridge)]
-    end
+flowchart TB
+  %% HOST
+  subgraph HOST[Host / Hypervisor]
+    Htitle[Host / Hypervisor — 192.168.x.0/24]
+    NIC2[NIC2 - DET_LAN bridge]
+  end
 
-    subgraph Detonation_LAN["Detonation VLAN (10.10.50.0/24)"]
-        WinDet[Windows Detonation VM]
-        Kali[Kali Monitor / Wireshark]
-    end
+  %% DETONATION
+  subgraph DET[Detonation VLAN]
+    Dtitle[Detonation VLAN — 10.10.50.0/24]
+    BR1[DET bridge]
+    Win[Windows Detonation VM]
+    Kali[Kali Monitor / Wireshark]
+    SPAN[Mirror / SPAN / tap]
+  end
 
-    subgraph Monitoring_LAN["Monitoring VLAN (10.10.60.0/24)"]
-        Wazuh[Wazuh Manager]
-        Sensor[Packet Sensor / Storage]
-    end
+  %% MONITORING
+  subgraph MON[Monitoring VLAN]
+    Mtitle[Monitoring VLAN — 10.10.60.0/24]
+    BR2[MON switch]
+    Sensor[Packet Sensor / Storage]
+    Wazuh[Wazuh Manager]
+  end
 
-    HostNIC2 --> Detonation_LAN
-    WinDet --> Kali
-    Detonation_LAN -->|Mirrored| Monitoring_LAN
-    Wazuh --> Sensor
+  %% Connections
+  NIC2 --> BR1
+  BR1 --> Win
+  BR1 --> Kali
+  BR1 --> SPAN --> BR2
+  BR2 --> Sensor
+  BR2 --> Wazuh
+
+
 ```
 
 © 2025 Jeremy Tarkington — All Rights Reserved.
