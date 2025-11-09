@@ -44,7 +44,7 @@ This repository is organized into separate sections for clarity:
 | Folder | Description |
 |:--|:--|
 | `/docs` | Detailed guides, firewall rules, and runbooks. |
-| `/scripts` | Shell scripts for starting captures, collecting artifacts, and deploying Wazuh agents. |
+| `/scripts` | Shell scripts for starting captures and collecting artifacts. |
 | `/templates` | Markdown templates for analysis reports and note-taking. |
 
 Screenshots, live samples, or raw captures are **not** included to maintain security and compliance.
